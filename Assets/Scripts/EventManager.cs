@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class EventManager : MonoBehaviour
 {
-    public UnityEvent onShoot;
+    public UnityEvent cameraToggle;
     // Start is called before the first frame update
     void Start()
     {

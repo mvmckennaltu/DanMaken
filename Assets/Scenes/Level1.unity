@@ -284,7 +284,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 315782523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.17, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -382,6 +382,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -504,9 +505,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a9a05dd857ed848876ec94149ef800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onShoot:
+  cameraToggle:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab4002968f4ee864bbd65dfaf74f4be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 1
+  cameraIsMoving: 1
+  playerTransform: {fileID: 2124957710}
 --- !u!1 &575549350
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +536,7 @@ GameObject:
   - component: {fileID: 575549352}
   m_Layer: 7
   m_Name: Edge3
-  m_TagString: Untagged
+  m_TagString: Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -631,7 +647,7 @@ GameObject:
   - component: {fileID: 609594714}
   m_Layer: 7
   m_Name: Edge2
-  m_TagString: Untagged
+  m_TagString: Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -824,7 +840,7 @@ GameObject:
   - component: {fileID: 627218655}
   m_Layer: 7
   m_Name: Edge1
-  m_TagString: Untagged
+  m_TagString: Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -935,7 +951,7 @@ GameObject:
   - component: {fileID: 722576664}
   m_Layer: 7
   m_Name: Edge4
-  m_TagString: Untagged
+  m_TagString: Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1112,8 +1128,8 @@ GameObject:
   - component: {fileID: 2124957710}
   - component: {fileID: 2124957709}
   - component: {fileID: 2124957712}
-  - component: {fileID: 2124957711}
   - component: {fileID: 2124957713}
+  - component: {fileID: 2124957711}
   - component: {fileID: 2124957714}
   - component: {fileID: 2124957715}
   - component: {fileID: 2124957716}
@@ -1329,6 +1345,13 @@ MonoBehaviour:
   moveSpeed: 5
   redSprite: {fileID: 21300000, guid: 920dd0a599140d1449343c672c4115a4, type: 3}
   blueSprite: {fileID: 21300000, guid: 8ef6b7c6e79281d48a78e60909bfb6d6, type: 3}
+  killSprite: {fileID: 21300000, guid: 0e9045ac9d0975044b86b558c7dfa732, type: 3}
+  playerPrefab: {fileID: 7320330313960649155, guid: 65b897105959d8a489d7ecb7e6c95d98, type: 3}
+  playerShootPoint: {fileID: 315782524}
+  isMovementLocked: 0
+  playerVelocityAdd: 0
+  mainCamera: {fileID: 519420031}
+  cameraMoveScript: {fileID: 0}
 --- !u!114 &2124957714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1351,11 +1374,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 97fe08f9e1ad9724c8605a0eb618a313, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1456,8 +1479,8 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!1 &2132343530
 GameObject:
   m_ObjectHideFlags: 0

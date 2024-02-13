@@ -1,22 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-
 public class CameraMove : MonoBehaviour
 {
-    public float scrollSpeed;
-    public bool cameraIsMoving;
-    // Start is called before the first frame update
+    public float scrollSpeed = 0.05f;
+    public bool cameraIsMoving = true;
+    private Transform cameraPos;
+   
+
+    // Reference to the player's transform
+    public Transform playerTransform;
+
     void Start()
     {
-        
+        cameraPos = GetComponent<Transform>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (cameraIsMoving)
+        {
+            // Move the camera upwards
+            cameraPos.Translate(Vector2.up * scrollSpeed * Time.deltaTime);
+
+            // Move the player upwards to compensate for the camera movement
+            playerTransform.Translate(Vector2.up * scrollSpeed * Time.deltaTime);
+        }
     }
 }

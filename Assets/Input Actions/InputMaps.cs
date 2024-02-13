@@ -276,6 +276,17 @@ public partial class @InputMaps: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""10b70010-6e5e-4bd8-a1f6-6b7db76b7c40"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""a5a0c9b6-3760-4979-8e85-aeafe109fab0"",
                     ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
