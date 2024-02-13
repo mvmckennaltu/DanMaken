@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Swap",
+                    "name": "Color Swap",
                     "type": "Button",
                     "id": "79711b9b-49de-4393-bf84-681002033f89",
                     "expectedControlType": "Button",
@@ -258,8 +258,8 @@
                     "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Swap",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Color Swap",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -269,8 +269,8 @@
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Swap",
+                    "groups": "Gamepad",
+                    "action": "Color Swap",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

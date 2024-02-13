@@ -46,7 +46,7 @@ public partial class @InputMaps: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Swap"",
+                    ""name"": ""Color Swap"",
                     ""type"": ""Button"",
                     ""id"": ""79711b9b-49de-4393-bf84-681002033f89"",
                     ""expectedControlType"": ""Button"",
@@ -280,8 +280,8 @@ public partial class @InputMaps: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Swap"",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Color Swap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -291,8 +291,8 @@ public partial class @InputMaps: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Swap"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Color Swap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -935,7 +935,7 @@ public partial class @InputMaps: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
-        m_Player_Swap = m_Player.FindAction("Swap", throwIfNotFound: true);
+        m_Player_ColorSwap = m_Player.FindAction("Color Swap", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1013,7 +1013,7 @@ public partial class @InputMaps: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Fire;
-    private readonly InputAction m_Player_Swap;
+    private readonly InputAction m_Player_ColorSwap;
     private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
@@ -1021,7 +1021,7 @@ public partial class @InputMaps: IInputActionCollection2, IDisposable
         public PlayerActions(@InputMaps wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
-        public InputAction @Swap => m_Wrapper.m_Player_Swap;
+        public InputAction @ColorSwap => m_Wrapper.m_Player_ColorSwap;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -1038,9 +1038,9 @@ public partial class @InputMaps: IInputActionCollection2, IDisposable
             @Fire.started += instance.OnFire;
             @Fire.performed += instance.OnFire;
             @Fire.canceled += instance.OnFire;
-            @Swap.started += instance.OnSwap;
-            @Swap.performed += instance.OnSwap;
-            @Swap.canceled += instance.OnSwap;
+            @ColorSwap.started += instance.OnColorSwap;
+            @ColorSwap.performed += instance.OnColorSwap;
+            @ColorSwap.canceled += instance.OnColorSwap;
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
@@ -1054,9 +1054,9 @@ public partial class @InputMaps: IInputActionCollection2, IDisposable
             @Fire.started -= instance.OnFire;
             @Fire.performed -= instance.OnFire;
             @Fire.canceled -= instance.OnFire;
-            @Swap.started -= instance.OnSwap;
-            @Swap.performed -= instance.OnSwap;
-            @Swap.canceled -= instance.OnSwap;
+            @ColorSwap.started -= instance.OnColorSwap;
+            @ColorSwap.performed -= instance.OnColorSwap;
+            @ColorSwap.canceled -= instance.OnColorSwap;
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
@@ -1252,7 +1252,7 @@ public partial class @InputMaps: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
-        void OnSwap(InputAction.CallbackContext context);
+        void OnColorSwap(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions
