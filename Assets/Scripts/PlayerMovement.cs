@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using TMPro;
+using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     public EventManager eventManager;
@@ -23,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     public float playerVelocityAdd = 2.5f;
     public Camera mainCamera;
     public CameraMove cameraMoveScript;
+    public TextMeshProUGUI livesCountText;
+    public int lives = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
         playerForm = 0;
         bulletRB = GetComponentInChildren<Rigidbody2D>();
         isMovementLocked = false;
+        Pause.gameIsPaused = false;
+        
     }
 
     public void OnMove(InputValue value)
@@ -43,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnFire()
     {
-        if(!isMovementLocked) 
+        if(!isMovementLocked && Pause.gameIsPaused == false) 
         {
             Instantiate(playerPrefab, playerShootPoint.position, playerShootPoint.rotation);
         }
@@ -77,10 +82,11 @@ public class PlayerMovement : MonoBehaviour
             rb2d.velocity = moveVal * moveSpeed;
         }
         rb2d.velocity = new Vector2(rb2d.velocity.x, (rb2d.velocity.y + playerVelocityAdd));
+        livesCountText.text = lives.ToString();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Red" && playerForm == 0)
+        if((collision.gameObject.tag == "Red" && playerForm == 0) || (collision.gameObject.tag == "Blue" && playerForm == 1) )
         {
             Death();
         }
@@ -89,5 +95,27 @@ public class PlayerMovement : MonoBehaviour
     {
         spriteRenderer.sprite = killSprite;
         isMovementLocked = true;
+        lives--;
+        float deathWaitTime = 5f;
+        deathWaitTime = (deathWaitTime - Time.deltaTime);
+        if (deathWaitTime == 0)
+        {
+
+            if (lives == 0)
+            {
+                SceneManager.LoadScene("Game Over");
+            }
+            else if(lives < 0)
+            {
+                lives = 0;
+            }
+            else
+            {
+                spriteRenderer.sprite = redSprite; isMovementLocked = false;
+                playerForm = 0;
+            }
+
+        }
+        
     }
 }
