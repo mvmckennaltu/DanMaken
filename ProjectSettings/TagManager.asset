@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Top
+  - Red
+  - Blue
+  - Enemy
+  - Player Bullet
   layers:
   - Default
   - TransparentFX
