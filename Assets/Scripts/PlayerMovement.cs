@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.SceneManagement;
+using static UnityEngine.GraphicsBuffer;
+
 public class PlayerMovement : MonoBehaviour
 {
     public EventManager eventManager;
@@ -50,7 +52,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if(!isMovementLocked && Pause.gameIsPaused == false) 
         {
-            Instantiate(playerPrefab, playerShootPoint.position, playerShootPoint.rotation);
+            GameObject bullet = ObjectPooling.SharedInstance.GetPooledObject();
+            if (bullet != null)
+            {
+                bullet.transform.position = playerShootPoint.transform.position;
+                bullet.transform.rotation = playerShootPoint.transform.rotation;
+                bullet.SetActive(true);
+            }
         }
         
 

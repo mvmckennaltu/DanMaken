@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Parallax : MonoBehaviour
 {
+    public float parallaxMultiplier;
+    float parallaxMovement;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +15,10 @@ public class Parallax : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       parallaxMovement = Camera.main.transform.position.y * parallaxMultiplier;
+
+        Vector2 newPosition = transform.localPosition;
+        newPosition.y = parallaxMovement;
+        transform.localPosition = newPosition;
     }
 }

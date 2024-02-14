@@ -21,7 +21,7 @@ public class MovePlayerProjectile : MonoBehaviour
     {
         if(collision.gameObject.tag ==("Top"))
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
