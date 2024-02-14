@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SocialPlatforms.Impl;
 
 public class RegularEnemyBehavior : MonoBehaviour
 {
@@ -9,19 +9,20 @@ public class RegularEnemyBehavior : MonoBehaviour
     public GameObject enemyRedPrefab;
     public GameObject enemyBluePrefab;
     private Rigidbody2D rb2d;
-    private Transform enemyTransform;
-    public static Transform shootPoint;
+    
+    public  Transform shootPoint;
     public Sprite killSprite;
     private SpriteRenderer spriteRenderer;
-    public static GameObject[] redPatterns;
-    public static GameObject[] bluePatterns;
+    public  GameObject[] redPatterns;
+    public  GameObject[] bluePatterns;
     public float deathWaitTime = 0.1f;
+    public float shootWaitTime = 0.5f;
     private bool isHit = false;
+    private bool isGonnaShoot = true;
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        enemyTransform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.velocity = new Vector2(rb2d.velocity.x, -3.0f);
     }
@@ -31,29 +32,42 @@ public class RegularEnemyBehavior : MonoBehaviour
     {
         if (isHit && deathWaitTime > 0)
         {
+            rb2d.velocity = Vector2.zero;
             deathWaitTime -= Time.deltaTime;
             if (deathWaitTime <= 0)
             {
                 Destroy(gameObject);
             }
         }
+        if (isGonnaShoot && shootWaitTime > 0)
+        {
+            shootWaitTime -= Time.deltaTime;
+            if (shootWaitTime <= 0)
+            {
+                Shoot();
+            }
+        }
     }
     
 
-    static public void Shoot()
+     public void Shoot()
     {
-        int randomPatternTypeChoice = Random.Range(0, 1);
-        int redPatternChoice;
-        int bluePatternChoice;
+      
+
+        
+        
+        
         GameObject selectedObject;
-        if (randomPatternTypeChoice == 0)
+        if (enemyType == 0)
         {
+            int redPatternChoice;
             redPatternChoice = Random.Range(0, redPatterns.Length);
             selectedObject = redPatterns[redPatternChoice];
 
         }
         else
         {
+            int bluePatternChoice;
             bluePatternChoice = Random.Range(0, bluePatterns.Length);
             selectedObject = bluePatterns[bluePatternChoice];
 
@@ -68,7 +82,8 @@ public class RegularEnemyBehavior : MonoBehaviour
             collision.gameObject.SetActive(false);
             spriteRenderer.sprite = killSprite;
             rb2d.velocity = Vector2.zero; 
-            isHit = true; 
+            isHit = true;
+            PlayerMovement.score = PlayerMovement.score + 10;
         }
     }
     }

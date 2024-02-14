@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    RegularEnemyBehavior enemyBehavior;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +23,6 @@ public class EnemyMovement : MonoBehaviour
         {
             var enemyrb = collision.GetComponent<Rigidbody2D>();
             enemyrb.velocity = Vector2.zero;
-            RegularEnemyBehavior.Shoot();
         }
        
     }

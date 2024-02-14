@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public EventManager eventManager;
     private PlayerInput input;
     private int playerForm = 0;
+    private AudioSource playerAudioSource;
     public Vector2 moveVal;
     public float moveSpeed;
     public Sprite redSprite;
@@ -26,20 +27,30 @@ public class PlayerMovement : MonoBehaviour
     public float playerVelocityAdd = 2.5f;
     public Camera mainCamera;
     public CameraMove cameraMoveScript;
+    public static int score;
     public TextMeshProUGUI livesCountText;
+    public TextMeshProUGUI scoreCountText;
+    public AudioClip shootSound;
+    public AudioClip killSound;
     public int lives = 5;
+    private bool isDead = false;
+    public float deathWaitTime = 1f;
 
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        playerAudioSource = GetComponent<AudioSource>();
         currentSprite = redSprite;
         spriteRenderer.sprite = currentSprite;
         playerForm = 0;
+        score = 0;
+        lives = 5;
         bulletRB = GetComponentInChildren<Rigidbody2D>();
         isMovementLocked = false;
         Pause.gameIsPaused = false;
+        isDead = false;
         
     }
 
@@ -58,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
                 bullet.transform.position = playerShootPoint.transform.position;
                 bullet.transform.rotation = playerShootPoint.transform.rotation;
                 bullet.SetActive(true);
+                playerAudioSource.PlayOneShot(shootSound);
             }
         }
         
@@ -91,11 +103,17 @@ public class PlayerMovement : MonoBehaviour
         }
         rb2d.velocity = new Vector2(rb2d.velocity.x, (rb2d.velocity.y + playerVelocityAdd));
         livesCountText.text = lives.ToString();
+        scoreCountText.text = score.ToString();
+        if (isDead)
+        {
+            deathWaitTime = (deathWaitTime - Time.deltaTime);
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if((collision.gameObject.tag == "Red" && playerForm == 0) || (collision.gameObject.tag == "Blue" && playerForm == 1) )
+        if((collision.gameObject.tag == "Red" && playerForm == 0) || (collision.gameObject.tag == "Blue" && playerForm == 1) || (collision.gameObject.tag == "Enemy"))
         {
+            Destroy(collision.gameObject);
             Death();
         }
     }
@@ -103,9 +121,9 @@ public class PlayerMovement : MonoBehaviour
     {
         spriteRenderer.sprite = killSprite;
         isMovementLocked = true;
+        isDead = true;
         lives--;
-        float deathWaitTime = 5f;
-        deathWaitTime = (deathWaitTime - Time.deltaTime);
+        playerAudioSource.PlayOneShot(killSound);
         if (deathWaitTime == 0)
         {
 
