@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -357,7 +357,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 30854b3473d41a140b0b5e5f6e5ffc7d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8391f02db047fc949899d03ecf05a389, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

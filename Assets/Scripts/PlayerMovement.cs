@@ -107,6 +107,10 @@ public class PlayerMovement : MonoBehaviour
         if (isDead)
         {
             deathWaitTime = (deathWaitTime - Time.deltaTime);
+            if (deathWaitTime < 0) 
+            {
+                deathWaitTime = 0;
+            }
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -139,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 spriteRenderer.sprite = redSprite; isMovementLocked = false;
                 playerForm = 0;
+                isDead = false;
             }
 
         }

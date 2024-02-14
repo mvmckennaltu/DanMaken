@@ -24,7 +24,7 @@ public class RegularEnemyBehavior : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb2d = GetComponent<Rigidbody2D>();
-        rb2d.velocity = new Vector2(rb2d.velocity.x, -3.0f);
+        rb2d.velocity = new Vector2(rb2d.velocity.x, -1.0f);
     }
 
     // Update is called once per frame

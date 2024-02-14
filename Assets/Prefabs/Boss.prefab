@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5992025276973848385}
   - component: {fileID: 8453008005411355075}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shoot Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,9 +95,10 @@ GameObject:
   - component: {fileID: 1553138071900192416}
   - component: {fileID: 4704278264648702911}
   - component: {fileID: 6648682980440184511}
-  m_Layer: 0
+  - component: {fileID: -309331695501416574}
+  m_Layer: 8
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -196,3 +197,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.2293025}
   m_EdgeRadius: 0
+--- !u!114 &-309331695501416574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8983827714859222273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bd77f56b6c99a24b8f5097ab343f033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossHP: 50
+  redPatterns: []
+  bluePatterns: []
+  killSprite: {fileID: 21300000, guid: 4045082de48463042876f5bae447fe81, type: 3}
+  goal: {fileID: 930340550500301992, guid: 261b5fd3c997ee845ac266b391e02820, type: 3}
+  isDead: 0
+  deathWaitTime: 1

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Processors;
 using UnityEngine.SceneManagement;
 public class BossBehavior : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class BossBehavior : MonoBehaviour
     public Sprite killSprite;
     private SpriteRenderer spriteRenderer;
     public static Transform shootPoint;
+    public GameObject goal;
+    public bool isDead = false;
+    public float deathWaitTime = 1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,44 +23,60 @@ public class BossBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+     if (isDead)
+        {
+            deathWaitTime -= Time.deltaTime;
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("Player Bullet"))
         {
-            bossHP = bossHP - 1;
+            bossHP--;
+            collision.gameObject.SetActive(false);
             if (bossHP < 0)
             {
                 bossHP = 0;
             }
             if (bossHP == 0) 
             {
-                
+                Death();
             }
         }
     }
     public void Shoot()
     {
 
-
-        int randomPatternTypeChoice = Random.Range(0, 1);
-        int redPatternChoice;
-        int bluePatternChoice;
-        GameObject selectedObject;
-        if (randomPatternTypeChoice == 0)
+        if (!isDead)
         {
-            redPatternChoice = Random.Range(0, redPatterns.Length);
-            selectedObject = redPatterns[redPatternChoice];
+            int randomPatternTypeChoice = Random.Range(0, 1);
+            int redPatternChoice;
+            int bluePatternChoice;
+            GameObject selectedObject;
+            if (randomPatternTypeChoice == 0)
+            {
+                redPatternChoice = Random.Range(0, redPatterns.Length);
+                selectedObject = redPatterns[redPatternChoice];
 
+            }
+            else
+            {
+                bluePatternChoice = Random.Range(0, bluePatterns.Length);
+                selectedObject = bluePatterns[bluePatternChoice];
+
+            }
+            Instantiate(selectedObject, shootPoint.position, shootPoint.rotation);
         }
-        else
-        {
-            bluePatternChoice = Random.Range(0, bluePatterns.Length);
-            selectedObject = bluePatterns[bluePatternChoice];
+        
 
-        }
-        Instantiate(selectedObject, shootPoint.position, shootPoint.rotation);
-
+    }
+    public void Death()
+    {
+        
+            Instantiate(goal, gameObject.transform.position, gameObject.transform.rotation);
+            Destroy(gameObject);
+        
+        
+        
     }
 }

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -33,6 +34,10 @@ public class CameraMove : MonoBehaviour
             {
                 enemy.transform.Translate(Vector2.up * scrollSpeed * Time.deltaTime);
             }
+        }
+        if(cameraPos.transform.position.y >= 60)
+        {
+            cameraIsMoving = false;
         }
     }
 }
