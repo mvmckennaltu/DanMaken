@@ -33,13 +33,15 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip shootSound;
     public AudioClip killSound;
     public int lives = 5;
-    private bool isDead = false;
+    public bool isDead = false;
     public float deathWaitTime = 1f;
+    private BoxCollider2D playerCollider;
 
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerAudioSource = GetComponent<AudioSource>();
         currentSprite = redSprite;
@@ -97,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(!isMovementLocked) 
+        if (!isMovementLocked)
         {
             rb2d.velocity = moveVal * moveSpeed;
         }
@@ -106,29 +108,36 @@ public class PlayerMovement : MonoBehaviour
         scoreCountText.text = score.ToString();
         if (isDead)
         {
-            deathWaitTime = (deathWaitTime - Time.deltaTime);
-            if (deathWaitTime < 0) 
+            rb2d.velocity = Vector2.zero;
+            deathWaitTime -= Time.deltaTime;
+            if (deathWaitTime <= 0)
             {
-                deathWaitTime = 0;
+                Revive();
             }
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if((collision.gameObject.tag == "Red" && playerForm == 0) || (collision.gameObject.tag == "Blue" && playerForm == 1) || (collision.gameObject.tag == "Enemy"))
+        if((collision.gameObject.tag == "Red" && playerForm == 1 && !isDead) || (collision.gameObject.tag == "Blue" && playerForm == 0) || (collision.gameObject.tag == "Enemy" ) && !isDead)
         {
             Destroy(collision.gameObject);
             Death();
         }
+        else
+        {
+            Destroy(collision.gameObject);
+        }
     }
     void Death()
     {
+        isDead = true;
         spriteRenderer.sprite = killSprite;
         isMovementLocked = true;
-        isDead = true;
         lives--;
+        gameObject.tag = "Dead";
+        gameObject.layer = 9;
         playerAudioSource.PlayOneShot(killSound);
-        if (deathWaitTime == 0)
+        if (deathWaitTime <= 0)
         {
 
             if (lives == 0)
@@ -139,14 +148,19 @@ public class PlayerMovement : MonoBehaviour
             {
                 lives = 0;
             }
-            else
-            {
-                spriteRenderer.sprite = redSprite; isMovementLocked = false;
-                playerForm = 0;
-                isDead = false;
-            }
 
         }
+        
+    }
+    void Revive()
+    {
+        isDead = false;
+        deathWaitTime = 1.0f;
+        isMovementLocked = false;
+        spriteRenderer.sprite = redSprite; 
+        playerForm = 0;
+        gameObject.layer = 6;
+        gameObject.tag = "Player";
         
     }
 }

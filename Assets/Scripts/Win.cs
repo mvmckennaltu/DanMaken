@@ -18,6 +18,10 @@ public class Win : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SceneManager.LoadScene("Victory");
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            SceneManager.LoadScene("Victory");
+        }
+        
     }
 }

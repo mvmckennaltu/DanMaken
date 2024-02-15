@@ -14,10 +14,12 @@ public class BossBehavior : MonoBehaviour
     public GameObject goal;
     public bool isDead = false;
     public float deathWaitTime = 1f;
+    public Sprite redSprite;
+    public Sprite normalSprite;
     // Start is called before the first frame update
     void Start()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -33,6 +35,7 @@ public class BossBehavior : MonoBehaviour
         if(collision.gameObject.CompareTag("Player Bullet"))
         {
             bossHP--;
+            StartCoroutine(FlashColor());
             collision.gameObject.SetActive(false);
             if (bossHP < 0)
             {
@@ -78,5 +81,11 @@ public class BossBehavior : MonoBehaviour
         
         
         
+    }
+    IEnumerator FlashColor()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        spriteRenderer.color = Color.white;
     }
 }
